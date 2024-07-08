@@ -1,11 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
+
+Route::get('message',[EmployeeController::class,'message']);
+Route::get('payController',[EmployeeController::class,'salary']);
+Route::get('wage/{day}/{pay}',[EmployeeController::class,'wage']);
+
+Route::get('sendMessage/{name}/{days}',[EmployeeController::class,'sendMessage']);
+
+Route::get('GoOut',[EmployeeController::class,'GoOut'])->name('GoOut');
+
 
 Route::get('/', function () {
     return view('welcome');
 
+
 });
+
 Route::get('/ruta1', function () {
     return "hola mundo";
     
@@ -57,3 +69,4 @@ Route::get('/redirect4/{base}/{altura}', function ($base,$height) {
 
 });
 Route::redirect('redirect5','https://apselom.com');
+
