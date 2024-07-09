@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+    public function view1(){
+        return view('view1');
+    }
+    public function view2(){
+        return view('view2');
+    }
     public function VB(){
         return view('viewBootstrap');
     }

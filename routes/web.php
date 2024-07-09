@@ -11,7 +11,8 @@ Route::get('sendMessage/{name}/{days}',[EmployeeController::class,'sendMessage']
 
 Route::get('GoOut',[EmployeeController::class,'GoOut'])->name('GoOut');
 Route::get('VB',[EmployeeController::class,'VB'])->name('VB');
-
+Route::get('view1',[EmployeeController::class,'view1'])->name('view1');
+Route::get('view2',[EmployeeController::class,'view2'])->name('view2');
 Route::get('/', function () {
     return view('welcome');
 
