@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+    public function VB(){
+        return view('viewBootstrap');
+    }
     public function goOut(){ 
         return "GoOut";
     }
