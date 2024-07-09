@@ -10,7 +10,7 @@ Route::get('wage/{day}/{pay}',[EmployeeController::class,'wage']);
 Route::get('sendMessage/{name}/{days}',[EmployeeController::class,'sendMessage']);
 
 Route::get('GoOut',[EmployeeController::class,'GoOut'])->name('GoOut');
-
+Route::get('VB',[EmployeeController::class,'VB'])->name('VB');
 
 Route::get('/', function () {
     return view('welcome');

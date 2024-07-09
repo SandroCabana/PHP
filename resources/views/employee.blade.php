@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -12,6 +13,7 @@
     <!--First method to show a view :Name of the employee : <?php echo $name ?> <br> Days worked : <?php echo $days ?> <br> Salary : <?php echo $salary ?>
     -->
     <!--Second method to show a view using blade -->
+    <h1>Welcome {{$name}}</h1>
     Name of the employee : {{ $name }} <br> Days worked : {{ $days }} <br> Salary : {{ $salary }}
     <br>
     @if($name=="Charly")
