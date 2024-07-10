@@ -6,11 +6,22 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function view1(){
-        return view('view1');
+    public function newEmployee(){
+        return view('newEmployee');
     }
-    public function view2(){
-        return view('view2');
+    public function saveEmployee(Request $request){
+        $this->validate($request,[
+            'ide'=>'required|regex:/^[E][M][P][-][0-9]{5}$/',
+            'name'=>'required|regex:/^[a-z,A-Z,á,é,í,ó,ü\s]+$/|min:5|max:15',
+            'lastname'=>'required|min:2',
+            'email'=>'required|email',
+            'phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:9',
+
+        ]);
+        echo "The data has been saved";
+        //return $request;
+        //dd($request);
+        //return view('view2');
     }
     public function VB(){
         return view('viewBootstrap');
