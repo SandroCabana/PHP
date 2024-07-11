@@ -3,9 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\employees;
+use App\Models\department;
 class EmployeeController extends Controller
 {
+    public function createDepartment(){
+        $department= new department;
+        $department->idd="1";
+        $department->name="ventas";
+        $department->save();
+        return $department;
+    }
+    public function eloquent(){
+       /* $employees= new employees;
+        $employees->ide="1";
+        $employees->name="John";
+        $employees->lastname="Doe";
+        $employees->email="johndoe@me.com";
+        $employees->phone="123456789";
+        $employees->gender="M";
+        $employees->description="Software Developer";
+        $employees->idd=1;
+        $employees->save();
+        */
+       /* $employees=employees::create([
+            'ide'=>'6','name'=>'juan','lastname'=>'Diaz','email'=>'juanDiaz@me.com',
+            'phone'=>'123456789','gender'=>'M','description'=>'Software Developer','idd'=>1
+        ]);
+        return "saved";*/
+        /*$employees=employees::find(1);
+        $employees->name="pedro";
+        $employees->lastname="smith";
+        $employees->save();
+        return "modified";*/
+        /*employees::where('gender','M')->update(['name'=>'carlos']);
+        return "updated with gender";*/
+        employees::destroy(1);
+        return "deleted";
+        //$test=employees::all();
+        //return $test;
+        
+    }
     public function newEmployee(){
         return view('newEmployee');
     }
