@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Department extends Migration
+class Departments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Department extends Migration
      */
     public function up()
     {
-        Schema::create('department', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->increments('idd');
             $table->string('name', 50);
             $table->rememberToken();
