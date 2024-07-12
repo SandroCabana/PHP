@@ -16,6 +16,10 @@ Route::get('view2',[EmployeeController::class,'view2'])->name('view2');
 Route::get('newEmployee',[EmployeeController::class,'newEmployee'])->name('newEmployee');
 Route::post('saveEmployee',[EmployeeController::class,'saveEmployee'])->name('saveEmployee');
 Route::get('readEmployee',[EmployeeController::class,'readEmployee'])->name('readEmployee');
+Route::get('deactivateEmployee/{ide}',[EmployeeController::class,'deactivateEmployee'])->name('deactivateEmployee');
+Route::get('reactivateEmployee/{ide}',[EmployeeController::class,'reactivateEmployee'])->name('reactivateEmployee');
+Route::get('editEmployee/{ide}',[EmployeeController::class,'editEmployee'])->name('editEmployee');
+Route::post('saveChanges',[EmployeeController::class,'saveChanges'])->name('saveChanges');
 Route::get('eloquent',[EmployeeController::class,'eloquent'])->name('eloquent');
 Route::get('createDepartment',[EmployeeController::class,'createDepartment'])->name('createDepartment');
 Route::get('/', function () {

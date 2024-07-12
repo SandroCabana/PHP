@@ -5,7 +5,7 @@
 <div class="container"> 
     <h1>Report Employees</h1>
     <br>
-    <a href="{{url('/newEmployee')}}" class="btn btn-primary">New Employee</a>
+    <a href="{{url('/newEmployee')}}" class="btn btn-success">New Employee</a>
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr class="table-light">
@@ -22,8 +22,12 @@
                 <th scope="col">{{$employee->department}}</th>
                 <th scope="col">{{$employee->age}}</th>
                 <th>
-                    <button type="button" class="btn btn-info">Edit</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <a type="button" href="{{url('/editEmployee/'.$employee->ide)}}" class="btn btn-info">Edit</a>
+                    @if ($employee->deleted_at)
+                        <a type="button" href="{{url('/reactivateEmployee/'.$employee->ide)}}"  class="btn btn-warning">Reactivate</a>
+                    @else
+                        <a type="button" href="{{url('/deactivateEmployee/'.$employee->ide)}}"  class="btn btn-danger">deactivate</a>
+                    @endif
                 </th>
               </tr>
             @endforeach  

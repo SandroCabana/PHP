@@ -8,11 +8,57 @@ use App\Models\department;
 
 class EmployeeController extends Controller
 {
+    public function reactivateEmployee($ide){
+        employees::withTrashed()->where('ide', $ide)->restore();
+        return view('message')->with('process', 'The employee has been reactivated')
+        ->with('message', "the employee $ide has been reactivated");   
+    }
+    public function deactivateEmployee($ide){
+        employees::where('ide', $ide)->delete();
+        return view('message')->with('process', 'The employee has been deactivated')
+        ->with('message', "the employee $ide has been deactivated");   
+    }
+    public function editEmployee($ide) 
+    {
+        $departments = $this->getDepartments();
 
+        $infoEmployee = employees::withTrashed()->where('ide', $ide)->get();
+        $nameDepartment= department::where('idd', $infoEmployee[0]->idd)->get('name');
+        return view('editEmployee' )->with('infoEmployee', $infoEmployee[0])
+            ->with('departments', $departments)
+            ->with('nameDepartment', $nameDepartment[0]->name);
+        
+    }
+    public function saveChanges(Request $request){
+        
+        $this->validate($request, [
+            'name' => 'required|regex:/^[a-z,A-Z,á,é,í,ó,ü\s]+$/|min:5|max:15',
+            'lastname' => 'required|regex:/^[a-z,A-Z,á,é,í,ó,ü\s]+$/|min:5|max:15',
+            'email' => 'required|email',
+            'phone' => 'required|regex:/^([0-9]*)$/|min:9|max:9',
+        ]);
+
+        $employees = employees::find($request->ide);
+        $employees->name = $request->name;
+        $employees->lastname = $request->lastname;
+        $employees->email = $request->email;
+        $employees->phone = $request->phone;
+        $employees->gender = $request->gender;
+        $employees->salary = 0;
+        $employees->age = '50';
+        $employees->description = $request->description;
+        $employees->idd = $request->idd;
+        $employees->save();
+        return view('message')->with('process', 'The employee has been saved')
+            ->with('message', "the employee $request->name $request->lastname has been saved");
+    
+    }
     public function readEmployee(){
-        $infoRequest = employees::join('departments', 'employees.idd', '=', 'departments.idd')
-            ->select('employees.ide', 'employees.name','employees.lastname' , 'departments.name as department', 'employees.age')
+        $infoRequest = employees::withTrashed()->join('departments', 'employees.idd', '=', 'departments.idd')
+            ->select('employees.ide', 'employees.name','employees.lastname' , 'departments.name as department', 'employees.age','employees.deleted_at')
+            ->orderBy('ide', 'asc')
             ->get();
+
         return view('readEmployee', compact('infoRequest'));
     }
 
