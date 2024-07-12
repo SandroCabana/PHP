@@ -9,6 +9,13 @@ use App\Models\department;
 class EmployeeController extends Controller
 {
 
+    public function readEmployee(){
+        $infoRequest = employees::join('departments', 'employees.idd', '=', 'departments.idd')
+            ->select('employees.ide', 'employees.name','employees.lastname' , 'departments.name as department', 'employees.age')
+            ->get();
+        return view('readEmployee', compact('infoRequest'));
+    }
+
     public function createDepartment()
     {
         $department = new department;
