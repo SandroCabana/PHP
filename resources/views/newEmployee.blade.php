@@ -13,7 +13,7 @@
                 <span class="text-danger">{{$errors->first('ide')}}</span>
             @endif
           </label>
-          <input type="text" name="ide" id="ide" class="form-control" value="{{old('ide')}}" placeholder="Clave empleado" tabindex="5">
+          <input type="text" name="ide" id="ide" class="form-control" value="{{$newIdEmployee}}" placeholder="Clave empleado" readonly="readonly" tabindex="5">
       </div>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -89,9 +89,9 @@
                 <label for="dni">Departamento:</label>
                 <select name = 'idd' class="custom-select">
                   <option selected="">Selecciona un departamento</option>
-                  <option value="1">Compras</option>
-                  <option value="2">Ventas</option>
-                  <option value="3">Producción</option>
+                  @foreach ($departments as $department)
+                    <option value = "{{$department->idd}}"> {{$department->name}}</option>
+                  @endforeach
                 </select>
               </div>
 
@@ -99,7 +99,7 @@
         </div>
         <div class="form-group">
             <label for="dni">Descripción:</label>
-            <textarea name="detail" id="detail" class="form-control" tabindex="5">
+            <textarea name="description" id="description" class="form-control" tabindex="5">
             </textarea>
         </div>
         <div class="row">
