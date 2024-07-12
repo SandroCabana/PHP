@@ -1,9 +1,9 @@
 @extends('viewBootstrap')
 @section('content')
 <div class="container">
-<h1>Alta de empleado</h1>
+<h1>Edit Employee</h1>
 <hr>
-<form action = "{{route('saveEmployee')}}" method = "POST">
+<form action = "{{route('saveChanges')}}" method = "POST">
     {{csrf_field()}}
     <div class="well">
       <div class="form-group">
@@ -13,7 +13,7 @@
                 <span class="text-danger">{{$errors->first('ide')}}</span>
             @endif
           </label>
-          <input type="text" name="ide" id="ide" class="form-control" value="{{$newIdEmployee}}" placeholder="Clave empleado" readonly="readonly" tabindex="5">
+          <input type="text" name="ide" id="ide" class="form-control" value="{{$infoEmployee->ide}}" placeholder="Clave empleado" readonly="readonly" tabindex="5">
       </div>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -24,7 +24,7 @@
                             <span class="text-danger">{{$errors->first('name')}}</span>
                         @endif
                     </label>
-                <input type="text" name="name" id="name" class="form-control" value="{{old('name')}}" placeholder="name" tabindex="1">
+                <input type="text" name="name" id="name" class="form-control" value="{{$infoEmployee->name}}" placeholder="name" tabindex="1">
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                             <span class="text-danger">{{$errors->first('lastname')}}</span>
                         @endif
                     </label>
-                    <input type="text" name="lastname" id="lastname" class="form-control" value="{{old('lastname')}}" placeholder="lastname" tabindex="2">
+                    <input type="text" name="lastname" id="lastname" class="form-control" value="{{$infoEmployee->lastname}}" placeholder="lastname" tabindex="2">
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                             <span class="text-danger">{{$errors->first('email')}}</span>
                         @endif
                     </label>
-                    <input type="email" name="email" id="email" class="form-control" value="{{old('email')}}" placeholder="Email" tabindex="4">
+                    <input type="email" name="email" id="email" class="form-control" value="{{$infoEmployee->email}}" placeholder="Email" tabindex="4">
                 </div>
             </div>
 
@@ -63,7 +63,7 @@
                             <span class="text-danger">{{$errors->first('phone')}}</span>
                         @endif
                     </label>
-                    <input type="text" name="phone" id="phone" class="form-control"  value="{{old('phone')}}" placeholder="phone" tabindex="3">
+                    <input type="text" name="phone" id="phone" class="form-control"  value="{{$infoEmployee->phone}}" placeholder="phone" tabindex="3">
                 </div>
             </div>
 
@@ -88,10 +88,12 @@
               <div class="form-group">
                 <label for="dni">Departamento:</label>
                 <select name = 'idd' class="custom-select">
-                  <option selected="">Selecciona un departamento</option>
+                  <option selected="{{$infoEmployee->idd}} " value="{{$infoEmployee->idd}}"></option>
                   @foreach ($departments as $department)
-                    <option value = "{{$department->idd}}"> {{$department->name}}</option>
-                  @endforeach
+                    <option value = "{{$department->idd}}"> {{$department->name}}
+                    </option>
+                    @endforeach
+
                 </select>
               </div>
 
@@ -99,7 +101,7 @@
         </div>
         <div class="form-group">
             <label for="dni">Descripción:</label>
-            <textarea name="description" id="description" class="form-control" tabindex="5">
+            <textarea name="description" id="description" class="form-control" tabindex="5">{{$infoEmployee->description}} 
             </textarea>
         </div>
         <div class="row">
