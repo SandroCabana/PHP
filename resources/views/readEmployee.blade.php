@@ -5,10 +5,14 @@
 <div class="container"> 
     <h1>Report Employees</h1>
     <br>
+    @if(Session::has('message'))
+        <div class="alert alert-success">{{Session::get('message')}}</div>
+    @endif  
     <a href="{{url('/newEmployee')}}" class="btn btn-success">New Employee</a>
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr class="table-light">
+                <th scope="col">Picture</th>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Department</th>
@@ -17,6 +21,7 @@
             </tr>    
             @foreach ($infoRequest as $employee)
             <tr>
+                <th scope="col"><img src="{{asset('files/'.$employee->img)}}" width="50" height="50"></th>
                 <th scope="col">{{$employee->ide}}</th>
                 <th scope="col">{{$employee->name}}</th>
                 <th scope="col">{{$employee->department}}</th>

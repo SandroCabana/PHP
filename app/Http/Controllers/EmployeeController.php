@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\employees;
 use App\Models\department;
-
+use Illuminate\Support\Facades\Session;
 class EmployeeController extends Controller
 {
     public function reactivateEmployee($ide){
         employees::withTrashed()->where('ide', $ide)->restore();
-        return view('message')->with('process', 'The employee has been reactivated')
-        ->with('message', "the employee $ide has been reactivated");   
+        Session::flash('message', 'The employee has been reactivated');
+
+        return redirect('/readEmployee');
     }
     public function deactivateEmployee($ide){
         employees::where('ide', $ide)->delete();
-        return view('message')->with('process', 'The employee has been deactivated')
-        ->with('message', "the employee $ide has been deactivated");   
+        Session::flash('message', 'The employee has been deactivated');
+
+        return redirect('/readEmployee');
+        /*return view('message')->with('process', 'The employee has been deactivated')
+        ->with('message', "the employee $ide has been deactivated"); */  
     }
     public function editEmployee($ide) 
     {
@@ -36,9 +40,16 @@ class EmployeeController extends Controller
             'lastname' => 'required|regex:/^[a-z,A-Z,á,é,í,ó,ü\s]+$/|min:5|max:15',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9]*)$/|min:9|max:9',
+            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ]);
-
-        $employees = employees::find($request->ide);
+        $file = $request->file('img');
+        if ($file<>"") {
+            
+            $img=$file->getClientOriginalName();
+            $img2=$request->ide . $img;
+        \Storage::disk('local')->put($img2, \File::get($file));
+        }
+        $employees = employees::withTrashed()-> find($request->ide);
         $employees->name = $request->name;
         $employees->lastname = $request->lastname;
         $employees->email = $request->email;
@@ -48,14 +59,18 @@ class EmployeeController extends Controller
         $employees->age = '50';
         $employees->description = $request->description;
         $employees->idd = $request->idd;
+        $employees->img=$img2;
         $employees->save();
-        return view('message')->with('process', 'The employee has been saved')
-            ->with('message', "the employee $request->name $request->lastname has been saved");
+        Session::flash('message', 'The employee has been saved');
+
+        return redirect()->route('readEmployee');
+        /*return view('message')->with('process', 'The employee has been saved')
+            ->with('message', "the employee $request->name $request->lastname has been saved");*/
     
     }
     public function readEmployee(){
         $infoRequest = employees::withTrashed()->join('departments', 'employees.idd', '=', 'departments.idd')
-            ->select('employees.ide', 'employees.name','employees.lastname' , 'departments.name as department', 'employees.age','employees.deleted_at')
+            ->select('employees.ide', 'employees.name','employees.lastname' , 'departments.name as department', 'employees.age','employees.deleted_at','employees.img')
             ->orderBy('ide', 'asc')
             ->get();
 
@@ -147,7 +162,18 @@ class EmployeeController extends Controller
             'lastname' => 'required|regex:/^[a-z,A-Z,á,é,í,ó,ü\s]+$/|min:5|max:15',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9]*)$/|min:9|max:9',
+            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ]);
+        $file = $request->file('img');
+        if ($file<>"") {
+            
+            $img=$file->getClientOriginalName();
+            $img2=$request->ide . $img;
+        \Storage::disk('local')->put($img2, \File::get($file));
+        }
+        else{
+            $img2="default.jpg";
+        }
         $employees = new employees;
         $employees->ide = $request->ide;
         $employees->name = $request->name;
@@ -159,6 +185,7 @@ class EmployeeController extends Controller
         $employees->age = '50';
         $employees->description = $request->description;
         $employees->idd = $request->idd;
+        $employees->img = $img2;
         $employees->save();
         return view('message')->with('process', 'The employee has been saved')
             ->with('message', "the employee $request->name $request->lastname has been saved");
