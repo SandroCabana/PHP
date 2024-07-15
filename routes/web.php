@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
-
+use App\Http\Controllers\LoginController;
 Route::get('message',[EmployeeController::class,'message']);
 Route::get('payController',[EmployeeController::class,'salary']);
 Route::get('wage/{day}/{pay}',[EmployeeController::class,'wage']);
@@ -22,6 +22,9 @@ Route::get('editEmployee/{ide}',[EmployeeController::class,'editEmployee'])->nam
 Route::post('saveChanges',[EmployeeController::class,'saveChanges'])->name('saveChanges');
 Route::get('eloquent',[EmployeeController::class,'eloquent'])->name('eloquent');
 Route::get('createDepartment',[EmployeeController::class,'createDepartment'])->name('createDepartment');
+
+Route::get('login',[LoginController::class,'login'])->name('login');
+Route::post('validate',[LoginController::class,'loginPost'])->name('validate');
 Route::get('/', function () {
     return view('welcome');
 

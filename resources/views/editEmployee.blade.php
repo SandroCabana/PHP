@@ -1,9 +1,11 @@
 @extends('viewBootstrap')
 @section('content')
 <div class="container">
-<h1>Edit Employee</h1>
+
+    <h1>Edit Employee</h1>
 <hr>
-<form action = "{{route('saveChanges')}}" method = "POST">
+   
+<form action = "{{route('saveChanges')}}" method = "POST" enctype="multipart/form-data">
     {{csrf_field()}}
     <div class="well">
       <div class="form-group">
@@ -104,6 +106,16 @@
             <textarea name="description" id="description" class="form-control" tabindex="5">{{$infoEmployee->description}} 
             </textarea>
         </div>
+        <div class="form-group">
+            <label for="dni">Profile picture:</label>
+            @if ($errors->first('img'))
+            <span class="text-danger">{{$errors->first('img')}}</span>
+            @endif
+            <input type="file" name="img" id="img" class="form-control" tabindex="6"/>        
+        </div>
+        <div class="form-group" >
+            <img src="{{asset('files/'.$infoEmployee->img)}}" width="150" height="150">
+        </div>    
         <div class="row">
             <div class="col-xs-6 col-md-6"><input type="submit" value="Guardar" class="btn btn-danger btn-block btn-lg" tabindex="7"
                 title="Guardar datos ingresados"></div>

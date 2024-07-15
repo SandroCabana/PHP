@@ -3,7 +3,7 @@
 <div class="container">
 <h1>Alta de empleado</h1>
 <hr>
-<form action = "{{route('saveEmployee')}}" method = "POST">
+<form action = "{{route('saveEmployee')}}" method = "POST" enctype="multipart/form-data">
     {{csrf_field()}}
     <div class="well">
       <div class="form-group">
@@ -101,6 +101,15 @@
             <label for="dni">Descripción:</label>
             <textarea name="description" id="description" class="form-control" tabindex="5">
             </textarea>
+        </div>
+        <div class="form-group">
+            <label for="dni">Profile picture:</label>
+            @if ($errors->first('img'))
+            <span class="text-danger">{{$errors->first('img')}}</span>
+            @endif
+            <input type="file" name="img" id="img" class="form-control" tabindex="6"/>
+            
+            
         </div>
         <div class="row">
             <div class="col-xs-6 col-md-6"><input type="submit" value="Guardar" class="btn btn-danger btn-block btn-lg" tabindex="7"
